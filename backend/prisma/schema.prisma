@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model SystemSettings {
+  id                String   @id @default(uuid())
+  whatsappGroupId   String?
+  whatsappGroupName String?
+  updatedAt         DateTime @updatedAt
+}
+
+model Client {
+  id        String    @id @default(uuid())
+  name      String
+  cpf_cnpj  String    @unique
+  phone     String?
+  email     String?
+  address   String?
+  notes     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Lawsuits  Lawsuit[]
+}
+
+model Lawsuit {
+  id            String     @id @default(uuid())
+  caseNumber    String     @unique
+  court         String?
+  actionType    String?
+  opposingParty String?
+  status        String     @default("ATIVO")
+  notes         String?
+  clientId      String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  client        Client?    @relation(fields: [clientId], references: [id])
+  Petitions     Petition[]
+}
+
+model Petition {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  status    String   @default("RASCUNHO")
+  lawsuitId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  lawsuit   Lawsuit  @relation(fields: [lawsuitId], references: [id])
+}
+
+model Event {
+  id        String   @id @default(uuid())
+  title     String
+  type      String
+  urgency   String
+  date      String
+  time      String?
+  notes     String?
+  lawsuitId String?
+  clientId  String?
+  createdAt DateTime @default(now())
+}
+
+model DocumentHistory {
+  id         String   @id @default(uuid())
+  title      String?
+  clientName String?
+  caseNumber String?
+  content    String
+  timeline   String?
+  auditData  String?
+  analytics  String?
+  fontesWeb  String?
+  matrizDuelo String? // JSON string
+  createdAt  DateTime @default(now())
+}
