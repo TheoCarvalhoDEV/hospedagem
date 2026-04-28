@@ -9,7 +9,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import WhatsAppCenter from './WhatsAppCenter';
 
-const API = 'http://localhost:3001';
+const API = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 interface ModeloInfo { nome: string; tamanho: number; criadoEm: string; }
 
