@@ -399,7 +399,7 @@ Retorne APENAS um objeto JSON (sem explicações) com a seguinte estrutura:
         }
 
         const response = await ai.models.generateContent({
-            model: 'gemini-1.5-flash',
+            model: 'gemini-2.5-flash-lite',
             contents: [{ role: 'user', parts: contents.map(c => typeof c === 'string' ? { text: c } : c) }],
             config: { temperature: 0.1 },
         });
@@ -1255,7 +1255,7 @@ O campo "text" deve ser retornado vazio ("").
 
         console.log("Iniciando Estágio 1: Extração de Estratégia...");
         const response1 = await ai.models.generateContent({
-            model: 'gemini-1.5-pro',
+            model: 'gemini-3.1-pro-preview',
             contents: formattedContents1,
             config: { temperature: 0.1 },
         });
@@ -1308,7 +1308,7 @@ Com base na estratégia acima e em todas as regras já informadas, redija AGORA 
 
         console.log("Iniciando Estágio 2: Redação Exaustiva da Peça...");
         const response2 = await ai.models.generateContent({
-            model: 'gemini-1.5-pro',
+            model: 'gemini-3.1-pro-preview',
             contents: formattedContents2,
             config: { temperature: 0.1 },
         });
